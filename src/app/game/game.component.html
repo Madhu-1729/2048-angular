@@ -1,5 +1,6 @@
 <div class="container"> 
     <input #hiddenInput (keydown)="onKeyDown($event)" type="text" style="visibility: hidden;" autofocus>
+    <p>Score: {{score}}</p>
     <div class="container-secondary">
         <div class="title">
             <h1>2048 Game </h1>
@@ -12,5 +13,10 @@
                 <!-- </div> -->
         </div>
         </div>
+        <!-- <div class="border" style="width: 200px;display: inline; float: left;">
+            <div class="board_main" *ngFor="let row of board2">
+                    <div class="box X_{{box}}" *ngFor="let box of row" [style.background]="getColor(box)">{{(box == 0) ? '' : box }} </div>
+        </div>
+        </div> -->
     </div>
 </div>

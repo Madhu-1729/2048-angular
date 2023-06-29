@@ -1,3 +1,4 @@
+import { JsonPipe } from '@angular/common';
 import { convertActionBinding } from '@angular/compiler/src/compiler_util/expression_converter';
 import {
   Component,
@@ -14,21 +15,26 @@ import {
 })
 export class GameComponent implements OnInit {
   @ViewChild('hiddenInput') hiddenInputRef: ElementRef;
-
-  constructor() {}
   public board = [
     [0, 0, 0, 0],
     [0, 0, 0, 0],
     [0, 0, 0, 0],
     [0, 0, 0, 0],
   ];
+  board2 = []
   // public board = [
-  //   [16, 2, 8, 4],
-  //   [16, 2, 8, 4],
-  //   [16, 2, 8, 4],
-  //   [16, 2, 8, 4],
+  //   [2, 4, 4, 16],
+  //   [4, 8, 4, 32],
+  //   [2, 4, 16, 64],
+  //   [0, 0, 8, 16]
   // ];
+
   tempBoard = [];
+  score = 0;
+  gameOver = false;
+
+  constructor() {}
+
   ngOnInit(): void {
     this.getRandom();
     this.getRandom();
@@ -36,18 +42,26 @@ export class GameComponent implements OnInit {
 
   @HostListener('document:keydown', ['$event'])
   onKeyDown(event: KeyboardEvent) {
-    if (event.key === 'ArrowUp') {
-      console.log('Arrow Up pressed');
-      this.moveUp();
-    } else if (event.key === 'ArrowDown') {
-      console.log('Arrow Down pressed');
-      this.movedown();
-    } else if (event.key === 'ArrowLeft') {
-      console.log('Arrow Left pressed');
-      this.moveLeft();
-    } else if (event.key === 'ArrowRight') {
-      console.log('Arrow Right pressed');
-      this.moveRight();
+    // console.table(this.board);
+    this.board2 =JSON.parse(JSON.stringify(this.board))
+    if(!this.gameOver){
+      if (event.key === 'ArrowUp') {
+        console.log('Arrow Up pressed');
+        this.moveUp();
+      } else if (event.key === 'ArrowDown') {
+        console.log('Arrow Down pressed');
+        this.movedown();
+      } else if (event.key === 'ArrowLeft') {
+        console.log('Arrow Left pressed');
+        this.moveLeft();
+      } else if (event.key === 'ArrowRight') {
+        console.log('Arrow Right pressed');
+        this.moveRight();
+      }
+    }
+    if(this.isGameOver(this.board)){
+      this.gameOver = true;
+      alert("Shit! Game is Over. Better luck next time");
     }
   }
   movedown() {
@@ -58,9 +72,7 @@ export class GameComponent implements OnInit {
       dArray.push(this.board[2][i])
       dArray.push(this.board[1][i])
       dArray.push(this.board[0][i])
-      console.log(dArray,"D ARRAY VALUES")
       let it = this.reorderRow1(JSON.parse(JSON.stringify(dArray)));
-      console.log(it,"IT values")
       this.board[3][i] = it[0]
       this.board[2][i] = it[1]
       this.board[1][i] = it[2]
@@ -78,9 +90,7 @@ export class GameComponent implements OnInit {
       dArray.push(this.board[1][i])
       dArray.push(this.board[2][i])
       dArray.push(this.board[3][i])
-      console.log(dArray,"D ARRAY VALUES")
       let it = this.reorderRow1(JSON.parse(JSON.stringify(dArray)));
-      console.log(it,"IT values")
       this.board[0][i] = it[0]
       this.board[1][i] = it[1]
       this.board[2][i] = it[2]
@@ -119,6 +129,7 @@ export class GameComponent implements OnInit {
             if (row[p] == 0) {
             } else if (row[p] == row[i]) {
               row[i] *= 2;
+              this.score = this.score + row[i]
               row[p] = 0;
             } else {
               i = p;
@@ -139,7 +150,6 @@ export class GameComponent implements OnInit {
         j++;
       }
     }
-    // console.log(row)
     return row;
   }
 
@@ -151,6 +161,7 @@ export class GameComponent implements OnInit {
             if (row[p] == 0) {
             } else if (row[p] == row[i]) {
               row[i] *= 2;
+              this.score = this.score + row[i]
               row[p] = 0;
             } else {
               i = p;
@@ -171,7 +182,6 @@ export class GameComponent implements OnInit {
         j++;
       }
     }
-    // console.log(row)
   }
 
   ngAfterViewInit() {
@@ -218,8 +228,45 @@ export class GameComponent implements OnInit {
         return '#f67c5f';
       case 64:
         return '#f65e3b';
+      case 128:
+        return 'red';
+      case 256:
+        return 'blue';
+      case 512:
+        return 'green';
+      case 1024:
+        return 'yellow';
+      case 2048:
+        return 'orange';
       default:
         return 'black';
     }
+  }
+
+   isGameOver(board) {
+    // return false
+    debugger
+    for(let i=0;i<board.length;i++){
+      for(let j=0;j<board.length; j++){
+        if(board[i][j] == 0){
+          return false
+        }
+      }
+    }
+
+    for(let a=0;a<board.length;a++){
+      for(let b=a;b<board.length; b++){
+        if(board[a][b] == 0){
+          return false
+        }
+        if( b < 3 && board[a][b] == board[a][b+1]){
+          return false;
+        }
+        if(a < 3 && board[a][b] == board[a+1][b] ){
+          return false;
+        }
+      }
+    }
+    return true;
   }
 }
