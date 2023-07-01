@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "shaka": {
+    "game_2048": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/shaka",
+            "outputPath": "dist/game_2048",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -61,18 +61,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "shaka:build"
+            "browserTarget": "game_2048:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "shaka:build:production"
+              "browserTarget": "game_2048:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "shaka:build"
+            "browserTarget": "game_2048:build"
           }
         },
         "test": {
@@ -109,11 +109,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "shaka:serve"
+            "devServerTarget": "game_2048:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "shaka:serve:production"
+              "devServerTarget": "game_2048:serve:production"
             }
           }
         },
@@ -123,5 +123,5 @@
       }
     }
   },
-  "defaultProject": "shaka"
+  "defaultProject": "game_2048"
 }
