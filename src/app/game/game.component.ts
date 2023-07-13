@@ -18,19 +18,19 @@ export class GameComponent implements OnInit {
   
   @ViewChild('hiddenInput') hiddenInputRef: ElementRef;
   
-  // public board = [
-  //   [0, 0, 0, 0],
-  //   [0, 0, 0, 0],
-  //   [0, 0, 0, 0],
-  //   [0, 0, 0, 0],
-  // ];
-  board2 = []
   public board = [
-    [256, 512, 1204, 2048],
-    [4, 8, 4, 32],
-    [2, 4, 16, 64],
-    [2, 2, 8, 16]
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
   ];
+  board2 = []
+  // public board = [
+  //   [256, 512, 1204, 2048],
+  //   [4, 8, 4, 32],
+  //   [2, 4, 16, 64],
+  //   [2, 2, 8, 16]
+  // ];
 
   tempBoard = [];
   score = 0;
