@@ -1,9 +1,12 @@
-<div class="container"> 
-    <input #hiddenInput (keydown)="onKeyDown($event)" type="text" style="visibility: hidden;" autofocus>
-    <p>Score: {{score}}</p>
+<div class="container" id="container"> 
+    <input #hiddenInput (keydown)="onKeyDown($event)"  type="text" style="visibility: hidden;" autofocus>
+    
     <div class="container-secondary">
         <div class="title">
-            <h1>2048 Game </h1>
+            <h1>_2048_</h1>
+        </div>
+        <div class="score">
+            <p>Score: {{score}}</p>
         </div>
         <div class="border">
             <div class="board_main" *ngFor="let row of board">

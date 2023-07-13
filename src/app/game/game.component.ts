@@ -7,27 +7,30 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-
+declare var Hammer;
 @Component({
   selector: 'app-game',
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.css'],
 })
+
 export class GameComponent implements OnInit {
+  
   @ViewChild('hiddenInput') hiddenInputRef: ElementRef;
-  public board = [
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-  ];
-  board2 = []
+  
   // public board = [
-  //   [2, 4, 4, 16],
-  //   [4, 8, 4, 32],
-  //   [2, 4, 16, 64],
-  //   [0, 0, 8, 16]
+  //   [0, 0, 0, 0],
+  //   [0, 0, 0, 0],
+  //   [0, 0, 0, 0],
+  //   [0, 0, 0, 0],
   // ];
+  board2 = []
+  public board = [
+    [256, 512, 1204, 2048],
+    [4, 8, 4, 32],
+    [2, 4, 16, 64],
+    [2, 2, 8, 16]
+  ];
 
   tempBoard = [];
   score = 0;
@@ -36,8 +39,31 @@ export class GameComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.getRandom();
-    this.getRandom();
+    // this.getRandom();
+    // this.getRandom();
+    var myOptions = {
+      touchAction: 'auto',
+      recognizers: [
+        [Hammer.Swipe, { direction: Hammer.DIRECTION_ALL  }],
+       ]
+    };
+
+    let _self = this
+    let ele = document.getElementById('container')
+       var hammertime = new Hammer(ele , myOptions);
+
+       _self.board2 =JSON.parse(JSON.stringify(this.board))
+    if(!_self.gameOver){
+     
+    hammertime.on('swipeleft',  ( ) => {_self.moveLeft();});
+    hammertime.on('swiperight', () => {_self.moveRight();});
+    hammertime.on('swipeup', () => {_self.moveUp();});
+    hammertime.on('swipedown', () => {_self.movedown();});
+    }
+    if(_self.isGameOver(this.board)){
+      _self.gameOver = true;
+      alert("Shit! Game is Over. Better luck next time");
+    }
   }
 
   @HostListener('document:keydown', ['$event'])
@@ -64,6 +90,13 @@ export class GameComponent implements OnInit {
       alert("Shit! Game is Over. Better luck next time");
     }
   }
+
+  @HostListener('swipe', ['$event'])
+  onSwipe(event: Event) {
+    event.preventDefault();
+  }
+
+
   movedown() {
     let tempArray = JSON.parse(JSON.stringify(this.board));
     for (let i = 0; i < this.board.length; i++) {
@@ -243,9 +276,12 @@ export class GameComponent implements OnInit {
     }
   }
 
+  // onSwipe(e){
+  //   console.log(e)
+  // }
+
    isGameOver(board) {
     // return false
-    debugger
     for(let i=0;i<board.length;i++){
       for(let j=0;j<board.length; j++){
         if(board[i][j] == 0){

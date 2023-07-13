@@ -7,4 +7,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'game_2048';
+  constructor(){
+  }
+
 }
