@@ -39,8 +39,8 @@ export class GameComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    // this.getRandom();
-    // this.getRandom();
+    this.getRandom();
+    this.getRandom();
     var myOptions = {
       touchAction: 'auto',
       recognizers: [

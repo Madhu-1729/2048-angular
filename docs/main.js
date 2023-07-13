@@ -161,8 +161,8 @@ class GameComponent {
         this.gameOver = false;
     }
     ngOnInit() {
-        // this.getRandom();
-        // this.getRandom();
+        this.getRandom();
+        this.getRandom();
         var myOptions = {
             touchAction: 'auto',
             recognizers: [
